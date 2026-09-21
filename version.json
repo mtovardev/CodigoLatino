@@ -1,7 +1,7 @@
 {
-  "versionCode": 1,
-  "versionName": "1.0",
-  "url": "https://github.com/mtovardev/CodigoLatino/releases/download/v1.0/app-release.apk",
-  "notes": "Probando",
+  "versionCode": 2,
+  "versionName": "1.1",
+  "url": "https://github.com/mtovardev/CodigoLatino/releases/download/v1.1/app-release.apk",
+  "notes": "Nuevos cambios en la UI, arreglos en el carrito a la hora de comprar y agendar un proyecto.",
   "obligatoria": false
 }
