@@ -1,7 +1,7 @@
 {
-  "versionCode": 7,
-  "versionName": "1.6",
+  "versionCode": 8,
+  "versionName": "1.7",
   "url": "https://github.com/mtovardev/CodigoLatino/releases/latest/download/app-release.apk",
-  "notes": "Solucion menores a problemas conocidos.",
+  "notes": "Mejora de UI, implementación de anuncios, notificaciones push, wallet cambiada.",
   "obligatoria": false
 }
