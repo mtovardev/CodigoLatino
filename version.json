@@ -1,7 +1,7 @@
 {
-  "versionCode": 8,
-  "versionName": "1.7",
+  "versionCode": 9,
+  "versionName": "1.8",
   "url": "https://github.com/mtovardev/CodigoLatino/releases/latest/download/app-release.apk",
-  "notes": "Mejora de UI, implementación de anuncios, notificaciones push, wallet cambiada.",
+  "notes": "🎉 ¡Novedades en CódigoLatino!\n\n💬 Chat mejorado\n• Ahora puedes finalizar la conversación cuando quieras\n• Recibe avisos visuales cuando el equipo de soporte te responda\n• Historial de chats finalizados para que no pierdas el hilo\n\n👥 Nuevos roles de equipo\n• Programadores y diseñadores con acceso a proyectos\n• Cada profesional verá únicamente lo que le corresponde\n\n📦 Servicios más transparentes\n• Al comprar un servicio ahora sabrás quién está desarrollando tu proyecto\n• Ve el nombre, foto y rol del encargado desde el detalle de tu compra\n\n🎨 Mejoras visuales\n• Interfaz más limpia y consistente\n• Selector de fechas con calendario\n\n¡Gracias por confiar en nosotros! 🚀",
   "obligatoria": false
 }
