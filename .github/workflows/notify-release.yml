@@ -1,0 +1,25 @@
+name: Notify New Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Supabase Edge Function
+        run: |
+          curl -X POST 'https://hsavjilckcyhusooszxh.supabase.co/functions/v1/send-notification' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzYXZqaWxja2N5aHVzb29zenhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MTI1ODksImV4cCI6MjEwNTQ4ODU4OX0.VTuBGMn7YCLvzkNB4KIqrZaQGseaqty6qjn7kZoM0hY' \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "table": "app_versions",
+            "type": "INSERT",
+            "record": {
+              "version_name": "${{ github.event.release.tag_name }}",
+              "url": "${{ github.event.release.assets[0].browser_download_url }}",
+              "notes": "${{ github.event.release.body }}",
+              "obligatoria": false
+            }
+          }'
