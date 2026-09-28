@@ -8,18 +8,55 @@ jobs:
   notify-supabase:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Supabase Edge Function
+      - name: Insert version into Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
-          curl -X POST 'https://hsavjilckcyhusooszxh.supabase.co/functions/v1/send-notification' \
-          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzYXZqaWxja2N5aHVzb29zenhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MTI1ODksImV4cCI6MjEwNTQ4ODU4OX0.VTuBGMn7YCLvzkNB4KIqrZaQGseaqty6qjn7kZoM0hY' \
-          -H 'Content-Type: application/json' \
-          -d '{
-            "table": "app_versions",
-            "type": "INSERT",
-            "record": {
-              "version_name": "${{ github.event.release.tag_name }}",
-              "url": "${{ github.event.release.assets[0].browser_download_url }}",
-              "notes": "${{ github.event.release.body }}",
-              "obligatoria": false
-            }
-          }'
+          # Extraer el número de versión del tag (ej: v1.2.3 → 123)
+          TAG="${{ github.event.release.tag_name }}"
+          VERSION_CODE=$(echo "$TAG" | grep -oE '[0-9]+' | tr -d '\n' | head -c 9 || echo "0")
+          if [ -z "$VERSION_CODE" ]; then VERSION_CODE="0"; fi
+
+          # Preparar las notas (escapar saltos de línea)
+          NOTES=$(cat <<'EOF'
+          ${{ github.event.release.body }}
+          EOF
+          )
+          NOTES_ESCAPED=$(echo "$NOTES" | python3 -c "import sys, json; print(json.dumps(sys.stdin.read()))" | sed 's/^"//;s/"$//')
+
+          # URL del primer asset (con verificación)
+          ASSET_URL="${{ github.event.release.assets[0].browser_download_url }}"
+          if [ -z "$ASSET_URL" ]; then
+            ASSET_URL="${{ github.event.release.html_url }}"
+          fi
+
+          echo "📦 Insertando versión: $TAG (code: $VERSION_CODE)"
+          echo "🔗 URL: $ASSET_URL"
+
+          # Insertar en Supabase
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$SUPABASE_URL/rest/v1/app_versions" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=representation" \
+            -d "{
+              \"version_name\": \"$TAG\",
+              \"version_code\": $VERSION_CODE,
+              \"url\": \"$ASSET_URL\",
+              \"notes\": \"$NOTES_ESCAPED\",
+              \"obligatoria\": false
+            }")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "📡 Status HTTP: $HTTP_CODE"
+          echo "📄 Respuesta: $BODY"
+
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "❌ Error insertando la versión"
+            exit 1
+          fi
+
+          echo "✅ Versión insertada correctamente. El webhook de Supabase debería disparar la notificación."
