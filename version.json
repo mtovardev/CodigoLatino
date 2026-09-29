@@ -1,7 +1,7 @@
 {
-  "versionCode": 1,
-  "versionName": "1.0",
-  "url": "https://github.com/mtovardev/CodigoLatino/releases/download/v1.0/app-release.apk",
-  "notes": "🎉 ¡Novedades en CódigoLatino!\n\nSe modifico el checkout al comprar agregarle extras a su compra, y pasos para no aglomerar el entorno, asi como tambien mejorarle el aparto 'Mis Servicios'.",
+  "versionCode": 2,
+  "versionName": "1.1",
+  "url": "https://github.com/mtovardev/CodigoLatino/releases/download/v1.1/app-release.apk",
+  "notes": "🎉 ¡Novedades en CódigoLatino!\n\nSe agrego una nueva pestaña 'Trabajos Realizados', asi podrás ver nuestro trabajo y estar más seguro al comprar.",
   "obligatoria": false
 }
