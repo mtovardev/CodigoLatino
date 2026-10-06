@@ -1,7 +1,7 @@
 {
-  "versionCode": 3,
-  "versionName": "1.1.5",
-  "url": "https://github.com/mtovardev/CodigoLatino/releases/download/v1.1.5/app-release.apk",
-  "notes": "Hemos llegado a la 1.1.5, hemos mejorado y cambiado el UI de CódigoLatino en el Login, Home, Navegador, Cuenta y Checkout, hemos implementado el pago a Cuotas 50 al iniciar y 50 al finalizar si asi lo deseas, también hemos mejorado la nevegacion asi colocando ciertas pestañas en la parte de 'Cuentas', además mejoramos y cambiamos el logo y el icono de la app, movimos los cupones para el Step-2 al pagar asi visualizando si se aplica el descuento.",
+  "versionCode": 4,
+  "versionName": "1.2",
+  "url": "https://github.com/mtovardev/CodigoLatino/releases/download/v1.2/app-release.apk",
+  "notes": "Cambio de UI/UX e Imagenes.",
   "obligatoria": false
 }
